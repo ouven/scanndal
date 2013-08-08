@@ -14,5 +14,5 @@ kind of runners, which bring their own dependencies into the pool, so
 solving version clashes became daily business.
 
 The library is highly influenced by ronmamos reflections library at
-googlecode (https://code.google.com/p/reflections/) and teh apache bcel
+googlecode (https://code.google.com/p/reflections/) and the apache bcel
 project.
