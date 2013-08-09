@@ -9,7 +9,7 @@ Main design goals:
 
 Most libraries of this kind utilize an opcode engineering library like
 asm, bcel or javaassist and any logging tool and other frameworks.
-The most common case I used classpath scanning was when I wrote some
+The most common case, I used classpath scanning was, when I wrote some
 kind of runners, which bring their own dependencies into the pool, so
 solving version clashes became daily business.
 

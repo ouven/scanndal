@@ -2,7 +2,7 @@ organization := "de.aktey.scanndal"
 
 name := "scanndal"
 
-version := "0.8-SNAPSHOT"
+version := "0.8"
 
 scalaVersion := "2.9.3"
 
@@ -11,7 +11,7 @@ homepage := Some(url("https://github.com/ouven/scanndal/wiki"))
 licenses := Seq("Apache License Version 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0"),
  				"The New BSD License" -> url("http://www.opensource.org/licenses/bsd-license.html"))
 
-libraryDependencies += "org.specs2" %% "specs2" % "1.12.4.1" % "test"
+libraryDependencies += "org.specs2" %% "specs2" % "latest.release" % "test"
 
 publishTo <<= version { v: String =>
   val nexus = "https://oss.sonatype.org/"
@@ -22,6 +22,8 @@ publishTo <<= version { v: String =>
 }
 
 publishMavenStyle := true
+
+scalacOptions += "-deprecation"
 
 publishArtifact in Test := false
 
