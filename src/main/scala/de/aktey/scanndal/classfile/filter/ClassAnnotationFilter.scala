@@ -1,6 +1,7 @@
 package de.aktey.scanndal.classfile.filter
 
 import de.aktey.scanndal.classfile.{ClassFileInterpretation, RuntimeVisibleAnnotationsAttribute, ClassFile}
+import scala.reflect._
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,8 +14,8 @@ import de.aktey.scanndal.classfile.{ClassFileInterpretation, RuntimeVisibleAnnot
  * test class files for a class annotation A
  * @tparam A the annotation class
  */
-class ClassAnnotationFilter[A: Manifest] extends Filter with ClassFileInterpretation {
-	val annotationTypeDescriptor = "L" + fromCanonicalName(manifest[A].erasure.getCanonicalName) + ";"
+class ClassAnnotationFilter[A: ClassTag] extends Filter with ClassFileInterpretation {
+	val annotationTypeDescriptor = "L" + fromCanonicalName(classTag[A].runtimeClass.getCanonicalName) + ";"
 
 	/**
 	 * @param cf classfile to test

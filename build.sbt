@@ -4,7 +4,7 @@ name := "scanndal"
 
 version := "0.8"
 
-scalaVersion := "2.9.3"
+scalaVersion := "2.10.2"
 
 homepage := Some(url("https://github.com/ouven/scanndal/wiki"))
 
@@ -23,7 +23,7 @@ publishTo <<= version { v: String =>
 
 publishMavenStyle := true
 
-scalacOptions += "-deprecation"
+scalacOptions ++= Seq("-deprecation", "-feature")
 
 publishArtifact in Test := false
 

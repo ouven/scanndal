@@ -1,6 +1,7 @@
 package de.aktey.scanndal.classfile.filter
 
 import de.aktey.scanndal.classfile.{ClassFileInterpretation, ClassFile}
+import scala.reflect._
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,8 +11,8 @@ import de.aktey.scanndal.classfile.{ClassFileInterpretation, ClassFile}
  *
  * filters for all classes with the direct super type S
  */
-class SuperClassFilter[S: Manifest] extends Filter with ClassFileInterpretation {
-	val superTypeInfo = fromCanonicalName(manifest[S].erasure.getCanonicalName)
+class SuperClassFilter[S: ClassTag] extends Filter with ClassFileInterpretation {
+	val superTypeInfo = fromCanonicalName(classTag[S].runtimeClass.getCanonicalName)
 
 	def apply(cf: ClassFile) = cf.superClassName == superTypeInfo
 }

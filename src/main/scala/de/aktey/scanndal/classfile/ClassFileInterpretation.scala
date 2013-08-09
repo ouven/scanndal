@@ -13,24 +13,15 @@ package de.aktey.scanndal.classfile
  */
 trait ClassFileInterpretation {
 
-	/**
-	 * extend a de.aktey.scanndal.classfile.ClassFile
-	 */
-	implicit def extendClassFile(classFile: ClassFile) = new ExtendedClassFile(classFile)
-
-	/**
-	 * extend a de.aktey.scanndal.classfile.ConstantPoolEntryUtf8
-	 */
-	implicit def extendConstantPoolEntryUtf8(cpe: ConstantPoolEntryUtf8) = new ExtendedConstantPoolEntryUtf8(cpe)
-
 	@inline def toCanonicalName(cpUtf8Entry: String) = cpUtf8Entry.replace('/', '.')
 
 	@inline def fromCanonicalName(canonicalName: String) = canonicalName.replace('.', '/')
 
 	/**
+	 * extend a de.aktey.scanndal.classfile.ClassFile
 	 * @param classFile class file to extend
 	 */
-	class ExtendedClassFile(classFile: ClassFile) {
+  implicit class ExtendedClassFile(classFile: ClassFile) {
 		/**
 		 * get an index of a class name from the constant pool
 		 *
@@ -90,9 +81,10 @@ trait ClassFileInterpretation {
 	}
 
 	/**
+   * extend a de.aktey.scanndal.classfile.ConstantPoolEntryUtf8
 	 * @param constantPoolEntry utf8 pool entry to extend
 	 */
-	class ExtendedConstantPoolEntryUtf8(constantPoolEntry: ConstantPoolEntryUtf8) {
+	implicit class ExtendedConstantPoolEntryUtf8(constantPoolEntry: ConstantPoolEntryUtf8) {
 		/**
 		 * @return represented String utf-8 decoded
 		 */
