@@ -1,5 +1,4 @@
-Scanndal
-========
+# Scanndal
 Scanndal is a library, which enables software developers to scan
 the classpath for classes without loading them via a classloader.
 
@@ -16,3 +15,26 @@ solving version clashes became daily business.
 The library is highly influenced by ronmamos reflections library at
 googlecode (https://code.google.com/p/reflections/) and the apache bcel
 project.
+
+## Latest release
+Scanndal is available in the maven central repository.
+```xml
+<!-- usage with maven -->
+<dependency>
+    <groupId>de.aktey.scanndal</groupId>
+    <artifactId>scanndal_2.9.3</artifactId>
+    <version>0.8</version>
+</dependency>
+```
+```scala
+// usage with sbt
+libraryDependencies += "de.aktey.scanndal" %% "scanndal" % "0.8"
+```
+
+#### release 0.8
+* add inital scanner
+* enable to filter by class annotations
+* enable to filter by direct superclass 
+* enable to filter by interface
+* add mapper to map to classname
+* add mapper to map to java.lang.Class
