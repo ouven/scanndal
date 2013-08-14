@@ -37,17 +37,17 @@ object ClassFileReader {
 		val constantPool = {
 			// the first read byte of an entry tells the type of the entry
 			def readConstantPoolEntry = data.readByte() match {
-				case 1 => new ConstantPoolEntryUtf8(readByteArray(data.readUnsignedShort))
-				case 7 => new ConstantPoolEntryClass(data.readUnsignedShort)
-				case 9 => new ConstantPoolEntryFieldref(data.readUnsignedShort, data.readUnsignedShort)
-				case 10 => new ConstantPoolEntryMethodref(data.readUnsignedShort, data.readUnsignedShort)
-				case 11 => new ConstantPoolEntryInterfaceMethodref(data.readUnsignedShort, data.readUnsignedShort)
-				case 8 => new ConstantPoolEntryString(data.readUnsignedShort)
-				case 3 => new ConstantPoolEntryInteger(data.readInt)
-				case 4 => new ConstantPoolEntryFloat(data.readInt)
-				case 5 => new ConstantPoolEntryLong(data.readInt, data.readInt)
-				case 6 => new ConstantPoolEntryDouble(data.readInt, data.readInt)
-				case 12 => new ConstantPoolEntryNameAndType(data.readUnsignedShort, data.readUnsignedShort)
+				case 1 => ConstantPoolEntryUtf8(readByteArray(data.readUnsignedShort))
+				case 7 => ConstantPoolEntryClass(data.readUnsignedShort)
+				case 9 => ConstantPoolEntryFieldref(data.readUnsignedShort, data.readUnsignedShort)
+				case 10 => ConstantPoolEntryMethodref(data.readUnsignedShort, data.readUnsignedShort)
+				case 11 => ConstantPoolEntryInterfaceMethodref(data.readUnsignedShort, data.readUnsignedShort)
+				case 8 => ConstantPoolEntryString(data.readUnsignedShort)
+				case 3 => ConstantPoolEntryInteger(data.readInt)
+				case 4 => ConstantPoolEntryFloat(data.readInt)
+				case 5 => ConstantPoolEntryLong(data.readInt, data.readInt)
+				case 6 => ConstantPoolEntryDouble(data.readInt, data.readInt)
+				case 12 => ConstantPoolEntryNameAndType(data.readUnsignedShort, data.readUnsignedShort)
 			}
 
 			def _read(length: Int, constants: List[ConstantPoolEntry]): List[ConstantPoolEntry] = {
@@ -76,10 +76,10 @@ object ClassFileReader {
 		// read attributes of the class, fields or methods
 		def readAttributes: Array[Attribute] = readArray(data.readUnsignedShort) {
 			// recursive structure definition with readElementValue
-			def readAnnotation = new Annotation(
+			def readAnnotation = Annotation(
 				typeIndex = data.readUnsignedShort,
 				elementValuePairs = readArray(data.readUnsignedShort) {
-					new ElementValuePair(
+					ElementValuePair(
 						nameIndex = data.readUnsignedShort,
 						value = readElementValue
 					)
@@ -91,21 +91,21 @@ object ClassFileReader {
 				// element type is
 				val tag = data.readByte
 				tag match {
-					case 'B' => new PrimitiveElementValue(tag, data.readUnsignedShort)
-					case 'C' => new PrimitiveElementValue(tag, data.readUnsignedShort)
-					case 'D' => new PrimitiveElementValue(tag, data.readUnsignedShort)
-					case 'F' => new PrimitiveElementValue(tag, data.readUnsignedShort)
-					case 'I' => new PrimitiveElementValue(tag, data.readUnsignedShort)
-					case 'J' => new PrimitiveElementValue(tag, data.readUnsignedShort)
-					case 'S' => new PrimitiveElementValue(tag, data.readUnsignedShort)
-					case 'Z' => new PrimitiveElementValue(tag, data.readUnsignedShort)
-					case 's' => new PrimitiveElementValue(tag, data.readUnsignedShort)
-					case 'c' => new ClassElementValue(tag, data.readUnsignedShort)
-					case 'e' => new EnumElementValue(tag, data.readUnsignedShort, data.readUnsignedShort)
+					case 'B' => PrimitiveElementValue(tag, data.readUnsignedShort)
+					case 'C' => PrimitiveElementValue(tag, data.readUnsignedShort)
+					case 'D' => PrimitiveElementValue(tag, data.readUnsignedShort)
+					case 'F' => PrimitiveElementValue(tag, data.readUnsignedShort)
+					case 'I' => PrimitiveElementValue(tag, data.readUnsignedShort)
+					case 'J' => PrimitiveElementValue(tag, data.readUnsignedShort)
+					case 'S' => PrimitiveElementValue(tag, data.readUnsignedShort)
+					case 'Z' => PrimitiveElementValue(tag, data.readUnsignedShort)
+					case 's' => PrimitiveElementValue(tag, data.readUnsignedShort)
+					case 'c' => ClassElementValue(tag, data.readUnsignedShort)
+					case 'e' => EnumElementValue(tag, data.readUnsignedShort, data.readUnsignedShort)
 					case '@' =>
 						val anno = readAnnotation
-						new AnnotationElementValue(tag, anno.typeIndex, anno.elementValuePairs)
-					case '[' => new ArrayElementValue(
+						AnnotationElementValue(tag, anno.typeIndex, anno.elementValuePairs)
+					case '[' => ArrayElementValue(
 						tag = tag,
 						values = readArray(data.readUnsignedShort)(readElementValue)
 					)
@@ -129,7 +129,7 @@ object ClassFileReader {
 						annotations = readArray(data.readUnsignedShort)(readAnnotation)
 					)
 				// all attributes are in this form
-				case _ => new DefaultAttribute(idx, typ, readByteArray(data.readInt))
+				case _ => DefaultAttribute(idx, typ, readByteArray(data.readInt))
 			}
 		}
 
@@ -139,7 +139,7 @@ object ClassFileReader {
 		val interfaces = readArray(data.readUnsignedShort)(data.readUnsignedShort)
 
 		val fields = readArray(data.readUnsignedShort) {
-			new Field(
+			Field(
 				accessFlags = data.readUnsignedShort,
 				nameIndex = data.readUnsignedShort,
 				descriptorIndex = data.readUnsignedShort,
@@ -148,7 +148,7 @@ object ClassFileReader {
 		}
 
 		val methods = readArray(data.readUnsignedShort) {
-			new Method(
+			Method(
 				accessFlags = data.readUnsignedShort,
 				nameIndex = data.readUnsignedShort,
 				descriptorIndex = data.readUnsignedShort,
@@ -158,7 +158,7 @@ object ClassFileReader {
 
 		val attributes = readAttributes
 
-		new ClassFile(
+		ClassFile(
 			magic,
 			minorVersion,
 			majorVersion,
