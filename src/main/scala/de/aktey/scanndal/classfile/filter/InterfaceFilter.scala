@@ -9,11 +9,11 @@ import de.aktey.scanndal.classfile.{ClassFileInterpretation, ClassFile}
  * Time: 23:33
  */
 class InterfaceFilter[T: Manifest] extends Filter with ClassFileInterpretation {
-  val interfaceName = fromCanonicalName(manifest[T].erasure.getCanonicalName)
+	val interfaceName = fromCanonicalName(manifest[T].erasure.getCanonicalName)
 
-  def apply(classFile: ClassFile) = classFile
-    .interfaces.toStream
-    .map(classFile.cpClass)
-    .map(classFile.cpUtf8String)
-    .exists(_ == interfaceName)
+	def apply(classFile: ClassFile) = classFile
+		.interfaces.toStream
+		.map(classFile.cpClass)
+		.map(classFile.cpUtf8String)
+		.exists(_ == interfaceName)
 }

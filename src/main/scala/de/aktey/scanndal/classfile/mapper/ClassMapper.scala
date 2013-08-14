@@ -17,6 +17,6 @@ class ClassMapper[T] extends Mapper[Class[T]] {
 	private val delegate = new ClassNameMapper
 
 	override def apply(classFile: ClassFile) = Class
-	  .forName(delegate.apply(classFile))
-	  .asInstanceOf[Class[T]]
+		.forName(delegate.apply(classFile))
+		.asInstanceOf[Class[T]]
 }
