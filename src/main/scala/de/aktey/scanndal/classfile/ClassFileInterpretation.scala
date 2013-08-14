@@ -39,7 +39,7 @@ trait ClassFileInterpretation {
 		 * @throws de.aktey.scanndal.classfile.ClassFileInterpretationException if entry is null or is not a de.aktey.scanndal.classfile.ConstantPoolEntryClass
 		 */
 		def cpClass(idx: Int) = classFile.constantPool(idx) match {
-			case cpe: ConstantPoolEntryClass if cpe != null => cpe.nameIdx
+			case ConstantPoolEntryClass(nameIdx) => nameIdx
 			case e => throw new ClassFileInterpretationException(
 				"constant pool entry with index %d has to be a %s, but was %s".format(
 					idx,

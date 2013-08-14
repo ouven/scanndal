@@ -9,57 +9,57 @@ package de.aktey.scanndal.classfile
  * structural elements in a class file
  * @see <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html">docs.oracle.com</a>
  */
-class ClassFile(val magic: Int,
-				val minorVersion: Int,
-				val majorVersion: Int,
-				val constantPool: Array[ConstantPoolEntry],
-				val accessFlags: Int,
-				val thisClass: Int,
-				val superClass: Int,
-				val interfaces: Array[Int],
-				val fields: Array[Field],
-				val methods: Array[Method],
-				val attributes: Array[_ <: Attribute])
+case class ClassFile(magic: Int,
+										 minorVersion: Int,
+										 majorVersion: Int,
+										 constantPool: Array[ConstantPoolEntry],
+										 accessFlags: Int,
+										 thisClass: Int,
+										 superClass: Int,
+										 interfaces: Array[Int],
+										 fields: Array[Field],
+										 methods: Array[Method],
+										 attributes: Array[Attribute])
 
-class Field(val accessFlags: Int,
-			val nameIndex: Int,
-			val descriptorIndex: Int,
-			val attributes: Array[_ <: Attribute])
+case class Field(accessFlags: Int,
+								 nameIndex: Int,
+								 descriptorIndex: Int,
+								 attributes: Array[Attribute])
 
-class Method(val accessFlags: Int,
-			 val nameIndex: Int,
-			 val descriptorIndex: Int,
-			 val attributes: Array[_ <: Attribute])
+case class Method(accessFlags: Int,
+									nameIndex: Int,
+									descriptorIndex: Int,
+									attributes: Array[Attribute])
 
 trait ConstantPoolEntry
 
-class ConstantPoolEntryClass(val nameIdx: Int) extends ConstantPoolEntry
+case class ConstantPoolEntryClass(nameIdx: Int) extends ConstantPoolEntry
 
-class ConstantPoolEntryFieldref(val nameIdx: Int,
-								val nameAndTypeIndex: Int) extends ConstantPoolEntry
+case class ConstantPoolEntryFieldref(nameIdx: Int,
+																		 nameAndTypeIndex: Int) extends ConstantPoolEntry
 
-class ConstantPoolEntryMethodref(val nameIdx: Int,
-								 val nameAndTypeIndex: Int) extends ConstantPoolEntry
+case class ConstantPoolEntryMethodref(nameIdx: Int,
+																			nameAndTypeIndex: Int) extends ConstantPoolEntry
 
-class ConstantPoolEntryInterfaceMethodref(val nameIdx: Int,
-										  val nameAndTypeIndex: Int) extends ConstantPoolEntry
+case class ConstantPoolEntryInterfaceMethodref(nameIdx: Int,
+																							 nameAndTypeIndex: Int) extends ConstantPoolEntry
 
-class ConstantPoolEntryString(val stringIdx: Int) extends ConstantPoolEntry
+case class ConstantPoolEntryString(stringIdx: Int) extends ConstantPoolEntry
 
-class ConstantPoolEntryInteger(val bytes: Int) extends ConstantPoolEntry
+case class ConstantPoolEntryInteger(bytes: Int) extends ConstantPoolEntry
 
-class ConstantPoolEntryFloat(val bytes: Int) extends ConstantPoolEntry
+case class ConstantPoolEntryFloat(bytes: Int) extends ConstantPoolEntry
 
-class ConstantPoolEntryLong(val highBytes: Int,
-							val lowBytes: Int) extends ConstantPoolEntry
+case class ConstantPoolEntryLong(highBytes: Int,
+																 lowBytes: Int) extends ConstantPoolEntry
 
-class ConstantPoolEntryDouble(val highBytes: Int,
-							  val lowBytes: Int) extends ConstantPoolEntry
+case class ConstantPoolEntryDouble(highBytes: Int,
+																	 lowBytes: Int) extends ConstantPoolEntry
 
-class ConstantPoolEntryNameAndType(val nameIdx: Int,
-								   val descriptionIdx: Int) extends ConstantPoolEntry
+case class ConstantPoolEntryNameAndType(nameIdx: Int,
+																				descriptionIdx: Int) extends ConstantPoolEntry
 
-class ConstantPoolEntryUtf8(val bytes: Array[Byte]) extends ConstantPoolEntry
+case class ConstantPoolEntryUtf8(bytes: Array[Byte]) extends ConstantPoolEntry
 
 trait Attribute {
 	def attributeNameIndex: Int
@@ -67,41 +67,39 @@ trait Attribute {
 	def typ: String
 }
 
-class DefaultAttribute(val attributeNameIndex: Int,
-					   val typ: String,
-					   val info: Array[Byte]) extends Attribute
+case class DefaultAttribute(attributeNameIndex: Int,
+														typ: String,
+														info: Array[Byte]) extends Attribute
 
-class RuntimeVisibleAnnotationsAttribute(val attributeNameIndex: Int,
-										 val typ: String,
-										 val annotations: Array[Annotation]) extends Attribute
+case class RuntimeVisibleAnnotationsAttribute(attributeNameIndex: Int,
+																							typ: String,
+																							annotations: Array[Annotation]) extends Attribute
 
-class Annotation(val typeIndex: Int,
-				 val elementValuePairs: Array[ElementValuePair])
+case class Annotation(typeIndex: Int,
+											elementValuePairs: Array[ElementValuePair])
 
-class ElementValuePair(val nameIndex: Int,
-					   val value: ElementValue)
+case class ElementValuePair(nameIndex: Int,
+														value: ElementValue)
 
 trait ElementValue {
 	def tag: Byte
 }
 
-class PrimitiveElementValue(val tag: Byte,
-							val constValueIndex: Int) extends ElementValue
+case class PrimitiveElementValue(tag: Byte,
+																 constValueIndex: Int) extends ElementValue
 
-class EnumElementValue(val tag: Byte,
-					   val typeNameIndex: Int,
-					   val constNameIndex: Int) extends ElementValue
+case class EnumElementValue(tag: Byte,
+														typeNameIndex: Int,
+														constNameIndex: Int) extends ElementValue
 
-class ClassElementValue(val tag: Byte,
-						val classInfoIndex: Int) extends ElementValue
+case class ClassElementValue(tag: Byte,
+														 classInfoIndex: Int) extends ElementValue
 
-class AnnotationElementValue(val tag: Byte,
-							 override val typeIndex: Int,
-							 override val elementValuePairs: Array[ElementValuePair])
-  extends Annotation(typeIndex, elementValuePairs)
-  with ElementValue
+case class AnnotationElementValue(tag: Byte,
+																	typeIndex: Int,
+																	elementValuePairs: Array[ElementValuePair]) extends ElementValue
 
-class ArrayElementValue(val tag: Byte,
-						values: Array[ElementValue]) extends ElementValue
+case class ArrayElementValue(tag: Byte,
+														 values: Array[ElementValue]) extends ElementValue
 
 
