@@ -21,7 +21,7 @@ trait ClassFileInterpretation {
 	 * extend a de.aktey.scanndal.classfile.ClassFile
 	 * @param classFile class file to extend
 	 */
-  implicit class ExtendedClassFile(classFile: ClassFile) {
+	implicit class ExtendedClassFile(classFile: ClassFile) {
 		/**
 		 * get an index of a class name from the constant pool
 		 *
@@ -81,7 +81,7 @@ trait ClassFileInterpretation {
 	}
 
 	/**
-   * extend a de.aktey.scanndal.classfile.ConstantPoolEntryUtf8
+	 * extend a de.aktey.scanndal.classfile.ConstantPoolEntryUtf8
 	 * @param constantPoolEntry utf8 pool entry to extend
 	 */
 	implicit class ExtendedConstantPoolEntryUtf8(constantPoolEntry: ConstantPoolEntryUtf8) {

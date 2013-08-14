@@ -11,5 +11,5 @@ package de.aktey.scanndal.interfacefiltertest
  * a trait with implementation
  */
 trait TestTrait2 {
-  def foo = "bar"
+	def foo = "bar"
 }

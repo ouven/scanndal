@@ -10,11 +10,11 @@ import scala.reflect._
  * Time: 23:33
  */
 class InterfaceFilter[T: ClassTag] extends Filter with ClassFileInterpretation {
-  val interfaceName = fromCanonicalName(classTag[T].runtimeClass.getCanonicalName)
+	val interfaceName = fromCanonicalName(classTag[T].runtimeClass.getCanonicalName)
 
-  def apply(classFile: ClassFile) = classFile
-    .interfaces.toStream
-    .map(classFile.cpClass)
-    .map(classFile.cpUtf8String)
-    .exists(_ == interfaceName)
+	def apply(classFile: ClassFile) = classFile
+		.interfaces.toStream
+		.map(classFile.cpClass)
+		.map(classFile.cpUtf8String)
+		.exists(_ == interfaceName)
 }

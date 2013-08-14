@@ -4,7 +4,6 @@ import java.io._
 import java.net.{JarURLConnection, URL, URLClassLoader}
 import java.util.jar.{JarEntry, JarFile}
 import de.aktey.scanndal.classfile.{ClassFileReader, ClassFile}
-import scala.collection.JavaConversions.enumerationAsScalaIterator
 
 /**
  * Created with IntelliJ IDEA.
@@ -79,9 +78,9 @@ class Scanndal(scanPackage: String = null) {
 			else file #:: Stream.empty[File]
 		}
 		getClassFiles(f)
-		  .filter(_.getName.endsWith(".class"))
-		  .map(toStream)
-		  .map(ClassFileReader.readFromInputStream)
+			.filter(_.getName.endsWith(".class"))
+			.map(toStream)
+			.map(ClassFileReader.readFromInputStream)
 	}
 
 	/**
@@ -96,9 +95,9 @@ class Scanndal(scanPackage: String = null) {
 		}
 
 		jarFile.entries.toStream
-		  .filterNot(_.isDirectory)
-		  .filter(_.getName.endsWith(".class"))
-		  .map(withJarEntryStream(_) {
+			.filterNot(_.isDirectory)
+			.filter(_.getName.endsWith(".class"))
+			.map(withJarEntryStream(_) {
 			stream => ClassFileReader.readFromInputStream(new BufferedInputStream(stream, 1024))
 		})
 	}
@@ -116,8 +115,8 @@ class Scanndal(scanPackage: String = null) {
 		case "jar" =>
 			scanJar(
 				url.openConnection()
-				  .asInstanceOf[JarURLConnection]
-				  .getJarFile
+					.asInstanceOf[JarURLConnection]
+					.getJarFile
 			)
 		case _ =>
 			Stream.empty
