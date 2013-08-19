@@ -37,7 +37,7 @@ class DeepAnnotationScan[A: ClassTag](scanPackage: String = null) {
 		val idMapper = new IdentityMapper()
 		val splitMapper = new Tuple2Mapper(idMapper, new Tuple2Mapper(new SuperClassNameMapper(), idMapper))
 
-		// create to streams with one scan
+		// create two streams with one scan
 		val (classFiles, superTuples) = Scanndal(scanPackage).scan.map(splitMapper).unzip
 		val annotatedClasses = classFiles.filter(annotationFilter)
 
