@@ -22,13 +22,20 @@ Scanndal is available in the maven central repository.
 <dependency>
     <groupId>de.aktey.scanndal</groupId>
     <artifactId>scanndal_2.9.3</artifactId>
-    <version>0.8</version>
+    <version>0.9</version>
 </dependency>
 ```
 ```scala
 // usage with sbt
-libraryDependencies += "de.aktey.scanndal" %% "scanndal" % "0.8"
+libraryDependencies += "de.aktey.scanndal" %% "scanndal" % "0.9"
 ```
+
+#### release 0.9
+* find classes with @inherited annotations
+* find classes Deep of a certain type - no matter
+  if the type is from an inherited interface in an inherited class
+* combine mappers to a single TupleMapper
+* combine filters logically to one filter
 
 #### release 0.8
 * add inital scanner
