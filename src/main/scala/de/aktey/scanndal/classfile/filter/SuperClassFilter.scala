@@ -1,6 +1,5 @@
 package de.aktey.scanndal.classfile.filter
 
-import de.aktey.scanndal.classfile.{ClassFileInterpretation, ClassFile}
 import scala.reflect._
 
 /**
@@ -8,11 +7,10 @@ import scala.reflect._
  * User: ruben
  * Date: 04.08.13
  * Time: 15:28
- *
- * filters for all classes with the direct super type S
  */
-class SuperClassFilter[S: ClassTag] extends Filter with ClassFileInterpretation {
-	val superTypeInfo = fromCanonicalName(classTag[S].runtimeClass.getCanonicalName)
 
-	def apply(cf: ClassFile) = cf.superClassName == superTypeInfo
-}
+/**
+ * test class files if they directly extend a superclass
+ * @tparam S the superclass
+ */
+class SuperClassFilter[S: ClassTag] extends SuperClassNameFilter(classTag[S].runtimeClass.getCanonicalName)

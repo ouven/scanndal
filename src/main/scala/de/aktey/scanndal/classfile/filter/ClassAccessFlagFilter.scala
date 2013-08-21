@@ -50,7 +50,7 @@ object MethodAccessFlag {
 }
 
 /**
- * test class files for with certain access flags
+ * test class files for certain access flags
  *
  * @param flagBits combine flags with bit operations
  */
