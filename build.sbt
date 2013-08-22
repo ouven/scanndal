@@ -2,7 +2,7 @@ organization := "de.aktey.scanndal"
 
 name := "scanndal"
 
-version := "0.9"
+version := "1.0-SNAPSHOT"
 
 scalaVersion := "2.9.3"
 
