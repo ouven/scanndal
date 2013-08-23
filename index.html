@@ -36,17 +36,12 @@
         <span class="blc"></span><span class="trc"></span>
         </div>
         <article class="markdown-body">
-          <h1>
-<a name="scanndal" class="anchor" href="#scanndal"><span class="octicon octicon-link"></span></a>Scanndal</h1>
+          <h2>
+<a name="main-design-goal" class="anchor" href="#main-design-goal"><span class="octicon octicon-link"></span></a>Main design goal:</h2>
 
-<p>Scanndal is a library, which enables software developers to scan
-the classpath for classes without loading them via a classloader.</p>
+<p><strong>Having no transient maven dependencies, except the scala-library.</strong></p>
 
-<p>Main design goal:</p>
-
-<ul>
-<li>To have no transient maven dependencies, except the scala-library.</li>
-</ul><p>Most libraries of this kind utilize an opcode engineering library like
+<p>Most libraries of this kind utilize an opcode engineering library like
 asm, bcel or javaassist and any logging tool and other frameworks.
 The most common case, I used classpath scanning was, when I wrote some
 kind of runners, which bring their own dependencies into the pool, so
@@ -57,6 +52,23 @@ googlecode (<a href="https://code.google.com/p/reflections/">https://code.google
 project.</p>
 
 <h2>
+<a name="purpose" class="anchor" href="#purpose"><span class="octicon octicon-link"></span></a>Purpose</h2>
+
+<p>Scanndal enables software developers to scan the classpath for classes without loading them. This can be necessary, if you have to look for all classes in your classpath, that match certain attributes.</p>
+
+<p>For example, if you were writing a servlet container for the servlet api 3.1 and you need to find all classes, that are annotated with the @WebServlet annotation. If you would use the reflection api, you would have to load all classes in your classpath, before you could check if it is annotated or not. That would waste a lot of permgen space and all static parts in a class would be executed, which could lead to unwanted site effects.
+Scanndal goes an other way and analyses the class file bytes to find your matches, so only the heap is littered and nothing is executed.</p>
+
+<p>The example mentioned above would be implemented like that:</p>
+
+<div class="highlight"><pre><span class="c1">// results in a List[Class[HttpServlet]]</span>
+<span class="k">val</span> <span class="n">servlets</span> <span class="k">=</span> <span class="nc">Scanndal</span><span class="o">(</span><span class="s">"my.root.package"</span><span class="o">).</span><span class="n">scan</span>
+   <span class="o">.</span><span class="n">filter</span><span class="o">(</span><span class="k">new</span> <span class="nc">ClassAnnotationFilter</span><span class="o">[</span><span class="kt">WebServlet</span><span class="o">]())</span>
+   <span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">new</span> <span class="nc">ClassMapper</span><span class="o">[</span><span class="kt">HttpServlet</span><span class="o">])</span>
+   <span class="o">.</span><span class="n">toList</span>
+</pre></div>
+
+<h2>
 <a name="latest-release" class="anchor" href="#latest-release"><span class="octicon octicon-link"></span></a>Latest release</h2>
 
 <p>Scanndal is available in the maven central repository. For details see the README file</p>
@@ -65,7 +77,7 @@ project.</p>
     </div>
     <footer>
       <div class="owner">
-      <p><a href="https://github.com/ouven" class="avatar"><img src="https://1.gravatar.com/avatar/be86ad29574eb397765fcf32f5c61dcc?d=https%3A%2F%2Fidenticons.github.com%2F08c08c6f1b65ee8d912448cd8f1d2d1f.png&amp;s=30" width="48" height="48"/></a> <a href="https://github.com/ouven">ouven</a> maintains <a href="https://github.com/ouven/scanndal">Scanndal</a></p>
+      <p><a href="https://github.com/ouven" class="avatar"><img src="https://0.gravatar.com/avatar/be86ad29574eb397765fcf32f5c61dcc?d=https%3A%2F%2Fidenticons.github.com%2F08c08c6f1b65ee8d912448cd8f1d2d1f.png&amp;s=30" width="48" height="48"/></a> <a href="https://github.com/ouven">ouven</a> maintains <a href="https://github.com/ouven/scanndal">Scanndal</a></p>
 
 
       </div>
@@ -80,6 +92,16 @@ project.</p>
     <p class="name"></p>
   </div>
 
-  
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-27363726-2");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
 </body>
 </html>
