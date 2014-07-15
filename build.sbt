@@ -4,7 +4,7 @@ name := "scanndal"
 
 version := "1.0-SNAPSHOT"
 
-scalaVersion := "2.10.2"
+crossScalaVersions := Seq("2.10.4", "2.11.1")
 
 homepage := Some(url("https://github.com/ouven/scanndal/wiki"))
 
