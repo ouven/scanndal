@@ -38,15 +38,15 @@ object ClassFileReader {
 			// the first read byte of an entry tells the type of the entry
 			def readConstantPoolEntry = data.readByte() match {
 				case 1 => ConstantPoolEntryUtf8(readByteArray(data.readUnsignedShort))
-				case 7 => ConstantPoolEntryClass(data.readUnsignedShort)
-				case 9 => ConstantPoolEntryFieldref(data.readUnsignedShort, data.readUnsignedShort)
-				case 10 => ConstantPoolEntryMethodref(data.readUnsignedShort, data.readUnsignedShort)
-				case 11 => ConstantPoolEntryInterfaceMethodref(data.readUnsignedShort, data.readUnsignedShort)
-				case 8 => ConstantPoolEntryString(data.readUnsignedShort)
 				case 3 => ConstantPoolEntryInteger(data.readInt)
 				case 4 => ConstantPoolEntryFloat(data.readInt)
 				case 5 => ConstantPoolEntryLong(data.readInt, data.readInt)
 				case 6 => ConstantPoolEntryDouble(data.readInt, data.readInt)
+				case 7 => ConstantPoolEntryClass(data.readUnsignedShort)
+				case 8 => ConstantPoolEntryString(data.readUnsignedShort)
+				case 9 => ConstantPoolEntryFieldref(data.readUnsignedShort, data.readUnsignedShort)
+				case 10 => ConstantPoolEntryMethodref(data.readUnsignedShort, data.readUnsignedShort)
+				case 11 => ConstantPoolEntryInterfaceMethodref(data.readUnsignedShort, data.readUnsignedShort)
 				case 12 => ConstantPoolEntryNameAndType(data.readUnsignedShort, data.readUnsignedShort)
 			}
 
