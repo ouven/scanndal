@@ -1,54 +1,71 @@
-organization := "de.aktey.scanndal"
 
-name := "scanndal"
-
-version := "1.0-SNAPSHOT"
-
-crossScalaVersions := Seq("2.10.4", "2.11.1")
-
-homepage := Some(url("https://github.com/ouven/scanndal/wiki"))
-
-licenses := Seq("Apache License Version 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0"),
- 				"The New BSD License" -> url("http://www.opensource.org/licenses/bsd-license.html"))
-
-libraryDependencies += "org.specs2" %% "specs2" % "latest.release" % "test"
-
-publishTo <<= version { v: String =>
-  val nexus = "https://oss.sonatype.org/"
-  if (v.trim.endsWith("SNAPSHOT"))
-    Some("snapshots" at nexus + "content/repositories/snapshots")
-  else
-    Some("releases" at nexus + "service/local/staging/deploy/maven2")
+// Helper method to pattern match against the scala version and return the correct specs version
+def specs2(scalaVersion: String) = scalaVersion match {
+  case "2.10.4" => "org.specs2" %% "specs2" % "2.5"
+  case _ => "org.specs2" %% "specs2" % "3.7"
 }
 
-publishMavenStyle := true
 
-scalacOptions ++= Seq("-deprecation", "-feature")
+lazy val scanndal = project.in(file(".")).settings(Seq(
+  organization := "de.aktey.scanndal",
+  name := "scanndal",
 
-publishArtifact in Test := false
+  scalaVersion := "2.11.8",
+  crossScalaVersions := Seq("2.10.4", "2.11.8"),
 
-pomIncludeRepository := { _ => false }
+  scalacOptions ++= Seq("-deprecation", "-feature"),
 
-pomExtra := (
-	<issueManagement>
-        <system>github</system>
-        <url>https://github.com/ouven/scanndal/issues</url>
-    </issueManagement>
+  homepage := Some(url("https://github.com/ouven/scanndal/wiki")),
+
+  licenses := Seq(
+    "Apache License Version 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0"),
+    "The New BSD License" -> url("http://www.opensource.org/licenses/bsd-license.html")
+  ),
+
+  resolvers += "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
+  libraryDependencies <+= scalaVersion(sv => specs2(sv) % "test" ),
+
+  // relase with sbt-pgp plugin
+  releasePublishArtifactsAction := PgpKeys.publishSigned.value,
+  releaseProcess := ReleaseProcess.steps,
+  releaseCrossBuild := true,
+
+  publishTo <<= version { v: String =>
+    val nexus = "https://oss.sonatype.org/"
+    if (v.trim.endsWith("SNAPSHOT"))
+      Some("snapshots" at nexus + "content/repositories/snapshots")
+    else
+      Some("releases" at nexus + "service/local/staging/deploy/maven2")
+  },
+
+  publishMavenStyle := true,
+
+  scalacOptions ++= Seq("-deprecation", "-feature"),
+
+  publishArtifact in Test := false,
+
+  pomIncludeRepository := { _ => false },
+
+  pomExtra := <issueManagement>
+    <system>github</system>
+    <url>https://github.com/ouven/scanndal/issues</url>
+  </issueManagement>
     <developers>
-        <developer>
-            <name>Ruben Wagner</name>
-            <url>https://github.com/ouven</url>
-            <roles>
-                <role>owner</role>
-                <role>developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
+      <developer>
+        <name>Ruben Wagner</name>
+        <url>https://github.com/ouven</url>
+        <roles>
+          <role>owner</role>
+          <role>developer</role>
+        </roles>
+        <timezone>+1</timezone>
+      </developer>
     </developers>
     <scm>
-        <url>git@github.com:ouven/scanndal.git</url>
-        <connection>scm:git:git@github.com:ouven/scanndal.git</connection>
-        <developerConnection>scm:git:git@github.com:ouven/scanndal.git</developerConnection>
+      <url>git@github.com:ouven/scanndal.git</url>
+      <connection>scm:git:git@github.com:ouven/scanndal.git</connection>
+      <developerConnection>scm:git:git@github.com:ouven/scanndal.git</developerConnection>
     </scm>
-)
+))
+
 

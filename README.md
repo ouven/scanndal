@@ -1,3 +1,5 @@
+[![Maven Central](https://img.shields.io/maven-central/v/de.aktey.scanndal/scanndal_2.11.svg?maxAge=2592000)](http://search.maven.org/#search%7Cga%7C1%7Cde.aktey.scanndal)
+
 # Scanndal
 Scanndal is a library, which enables software developers to scan
 the classpath for classes without loading them via a classloader.
@@ -15,20 +17,6 @@ The library is highly influenced by ronmamos reflections library at
 googlecode (https://code.google.com/p/reflections/) and the apache bcel
 project.
 
-## Latest release
-Scanndal is available in the maven central repository.
-```xml
-<!-- usage with maven -->
-<dependency>
-    <groupId>de.aktey.scanndal</groupId>
-    <artifactId>scanndal_2.10</artifactId>
-    <version>0.9</version>
-</dependency>
-```
-```scala
-// usage with sbt
-libraryDependencies += "de.aktey.scanndal" %% "scanndal" % "0.9"
-```
 
 #### release 0.9
 * find classes with @inherited annotations
