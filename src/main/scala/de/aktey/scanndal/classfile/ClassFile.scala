@@ -59,6 +59,14 @@ case class ConstantPoolEntryDouble(highBytes: Int,
 case class ConstantPoolEntryNameAndType(nameIdx: Int,
 																				descriptionIdx: Int) extends ConstantPoolEntry
 
+case class ConstantPoolEntryMethodHandle(nameIdx: Int,
+																				descriptionIdx: Int) extends ConstantPoolEntry
+
+case class ConstantPoolEntryMethodType(descriptionIdx: Int) extends ConstantPoolEntry
+
+case class ConstantPoolEntryInvokeDynamic(nameIdx: Int,
+																				descriptionIdx: Int) extends ConstantPoolEntry
+
 case class ConstantPoolEntryUtf8(bytes: Array[Byte]) extends ConstantPoolEntry
 
 trait Attribute {

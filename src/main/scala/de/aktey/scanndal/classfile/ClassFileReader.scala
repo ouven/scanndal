@@ -48,6 +48,9 @@ object ClassFileReader {
 				case 10 => ConstantPoolEntryMethodref(data.readUnsignedShort, data.readUnsignedShort)
 				case 11 => ConstantPoolEntryInterfaceMethodref(data.readUnsignedShort, data.readUnsignedShort)
 				case 12 => ConstantPoolEntryNameAndType(data.readUnsignedShort, data.readUnsignedShort)
+				case 15 => ConstantPoolEntryMethodHandle(data.readUnsignedByte, data.readUnsignedShort)
+				case 16 => ConstantPoolEntryMethodType(data.readUnsignedShort)
+				case 18 => ConstantPoolEntryInvokeDynamic(data.readUnsignedShort, data.readUnsignedShort)
 			}
 
 			def _read(length: Int, constants: List[ConstantPoolEntry]): List[ConstantPoolEntry] = {
