@@ -18,6 +18,9 @@ googlecode (https://code.google.com/p/reflections/) and the apache bcel
 project.
 
 
+#### release 0.10
+* support Java 8 class files (thx @nspekat) 
+
 #### release 0.9
 * find classes with @inherited annotations
 * find classes Deep of a certain type - no matter
