@@ -3,8 +3,8 @@ lazy val scanndal = project.in(file(".")).settings(Seq(
   organization := "de.aktey.scanndal",
   name := "scanndal",
 
-  scalaVersion := "2.11.8",
-  crossScalaVersions := Seq("2.10.4", "2.11.8"),
+  scalaVersion := "2.12.0",
+  crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.0"),
 
   scalacOptions ++= Seq("-deprecation", "-feature"),
 
