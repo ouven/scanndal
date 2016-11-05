@@ -23,9 +23,9 @@ lazy val scanndal = project.in(file(".")).settings(Seq(
   releaseProcess := ReleaseProcess.steps,
   releaseCrossBuild := true,
 
-  publishTo <<= version { v: String =>
+  publishTo := {
     val nexus = "https://oss.sonatype.org/"
-    if (v.trim.endsWith("SNAPSHOT"))
+    if (version.value.trim.endsWith("SNAPSHOT"))
       Some("snapshots" at nexus + "content/repositories/snapshots")
     else
       Some("releases" at nexus + "service/local/staging/deploy/maven2")
