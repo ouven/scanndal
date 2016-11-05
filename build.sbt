@@ -1,11 +1,4 @@
 
-// Helper method to pattern match against the scala version and return the correct specs version
-def specs2(scalaVersion: String) = scalaVersion match {
-  case "2.10.4" => "org.specs2" %% "specs2" % "2.5"
-  case _ => "org.specs2" %% "specs2" % "3.7"
-}
-
-
 lazy val scanndal = project.in(file(".")).settings(Seq(
   organization := "de.aktey.scanndal",
   name := "scanndal",
@@ -23,9 +16,9 @@ lazy val scanndal = project.in(file(".")).settings(Seq(
   ),
 
   resolvers += "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
-  libraryDependencies <+= scalaVersion(sv => specs2(sv) % "test" ),
+  libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.0" % "test",
 
-  // relase with sbt-pgp plugin
+    // relase with sbt-pgp plugin
   releasePublishArtifactsAction := PgpKeys.publishSigned.value,
   releaseProcess := ReleaseProcess.steps,
   releaseCrossBuild := true,
